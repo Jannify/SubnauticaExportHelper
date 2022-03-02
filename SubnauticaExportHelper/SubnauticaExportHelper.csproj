@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>SubnauticaExportHelper</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <Company>Jannify</Company>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>..\bin\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\bin\Release\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="AssetRipperCommon">
+        <HintPath>..\..\AssetRipper\Bins\AssetRipperLibrary\ReleaseWindows\AssetRipperCommon.dll</HintPath>
+      </Reference>
+      <Reference Include="AssetRipperCore">
+        <HintPath>..\..\AssetRipper\Bins\AssetRipperLibrary\ReleaseWindows\AssetRipperCore.dll</HintPath>
+      </Reference>
+      <Reference Include="AssetRipperLibrary">
+        <HintPath>..\..\AssetRipper\Bins\AssetRipperLibrary\ReleaseWindows\AssetRipperLibrary.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="ScriptFiles.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ScriptFiles.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="ScriptFiles.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>PostProcessingComponent.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
