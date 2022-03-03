@@ -25,9 +25,17 @@ public class FixSubnauticaAssetsPostExporter : IPostExporter
 
         FixReplaceCode(Path.Combine(assetsPath, "Resources", "uGUI.prefab"), ScriptFiles.CameraScannerRoomPattern, ScriptFiles.CameraScannerRoomReplacement);
 
+        Info("Moving GeneratorPieces AssetBundle");
+        string basePiecesDir = Path.Combine(assetsPath, "Prefabs", "Base", "GeneratorPieces");
+        Directory.CreateDirectory(basePiecesDir);
+        Directory.Move(Path.Combine(assetsPath, "Asset_Bundles", "basegeneratorpieces", "prefabs", "base", "generatorpieces"), Path.Combine(basePiecesDir));
+
+        Info("Moving Logo AssetBundle");
+        Directory.Move(Path.Combine(assetsPath, "Asset_Bundles", "logos"), Path.Combine(assetsPath, "Logos"));
+
         Info("Adding AssetBundle tag");
-        File.WriteAllText(Path.Combine(assetsPath, "Asset_Bundles", "basegeneratorpieces.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "basegeneratorpieces"));
-        File.WriteAllText(Path.Combine(assetsPath, "Asset_Bundles", "logos.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "logos"));
+        File.WriteAllText(Path.Combine(basePiecesDir, "GeneratorPieces.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "basegeneratorpieces"));
+        File.WriteAllText(Path.Combine(assetsPath, "Logos", "Logos.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "logos"));
         File.WriteAllText(Path.Combine(assetsPath, "Asset_Bundles", "waterdisplacement.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "waterdisplacement"));
     }
 
