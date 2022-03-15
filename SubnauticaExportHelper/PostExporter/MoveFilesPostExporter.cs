@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Security.Cryptography;
+using System.Text.Json;
 using AssetRipper.Core.Logging;
 using AssetRipper.Library;
 using AssetRipper.Library.Exporters;
@@ -14,8 +15,36 @@ public class MoveFilesPostExporter : IPostExporter
         string subnauticaPath = ripper.GameStructure.PlatformStructure.RootPath;
 
         Info("Backing up Shaders");
-        Directory.CreateDirectory(Path.Combine(exportPath, "ShaderBackup"));
-        CopyDirectory(Path.Combine(assetsPath, "Shader"), Path.Combine(exportPath, "ShaderBackup"));
+        MD5 md5 = MD5.Create();
+        Dictionary<string, byte[]> shaderToHash = new();
+        Directory.CreateDirectory(Path.Combine(exportPath, "ShaderBackup", "Shader"));
+        foreach (string shaderPath in Directory.GetFiles(Path.Combine(assetsPath, "Shader"), "*.asset", SearchOption.AllDirectories))
+        {
+            CopyShader(shaderPath);
+        }
+
+        foreach (string shaderPath in Directory.GetFiles(Path.Combine(assetsPath, "Resources"), "*.asset", SearchOption.AllDirectories))
+        {
+            if (File.ReadLines(shaderPath).ElementAt(3) == "Shader:")
+            {
+                CopyShader(shaderPath);
+            }
+        }
+
+        void CopyShader(string shaderPath)
+        {
+            string destinationPath = shaderPath.Replace("Assets", "ShaderBackup");
+            Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+
+            using FileStream fileStream = File.OpenRead(shaderPath);
+            shaderToHash.Add(Path.GetFileName(shaderPath),  md5.ComputeHash(fileStream));
+
+            fileStream.Position = 0;
+            using FileStream destinationStream = File.OpenWrite(destinationPath);
+            fileStream.CopyTo(destinationStream);
+        }
+
+        File.WriteAllText(Path.Combine(exportPath, "ShaderBackup", "shaderHashes.json"), JsonSerializer.Serialize(shaderToHash));
 
         Info("Copying StreamingAssets, this may take a while");
         CopyDirectory(Path.Combine(subnauticaPath, "Subnautica_Data", "StreamingAssets"), Path.Combine(assetsPath, "StreamingAssets"));
