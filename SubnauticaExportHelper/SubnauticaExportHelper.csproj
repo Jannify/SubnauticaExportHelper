@@ -29,18 +29,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="ScriptFiles.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>ScriptFiles.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="ScriptFiles.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>PostProcessingComponent.resx</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="SubnauticaHarmonyFixes.zip" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="SubnauticaFixes.zip" />
+      <AdditionalFiles Include="SubnauticaFixes.zip">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </AdditionalFiles>
     </ItemGroup>
 
 </Project>

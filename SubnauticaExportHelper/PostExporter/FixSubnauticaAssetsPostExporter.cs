@@ -1,5 +1,7 @@
-using System;
+﻿using System;
 using System.IO;
+using System.IO.Compression;
+using System.Reflection;
 using AssetRipper.Core.Logging;
 using AssetRipper.Library;
 using AssetRipper.Library.Exporters;
@@ -37,6 +39,10 @@ public class FixSubnauticaAssetsPostExporter : IPostExporter
         File.WriteAllText(Path.Combine(basePiecesDir, "GeneratorPieces.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "basegeneratorpieces"));
         File.WriteAllText(Path.Combine(assetsPath, "Logos.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "logos"));
         File.WriteAllText(Path.Combine(assetsPath, "Asset_Bundles", "waterdisplacement.meta"), ScriptFiles.AssetBundleMeta.Replace("{1}", RandomGuid()).Replace("{2}", "waterdisplacement"));
+
+        Info("Add Harmony files");
+        string zipPath = Path.Combine(Path.GetDirectoryName(Assembly.GetAssembly(typeof(SubnauticaExportHelperPlugin)).Location), "SubnauticaFixes.zip");
+        ZipFile.ExtractToDirectory(zipPath, Path.Combine(assetsPath, "Editor"));
     }
 
     private void FixReplaceCode(string path, string pattern, string replacement)
