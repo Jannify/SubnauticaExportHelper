@@ -6,16 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <Company>Jannify</Company>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <OutputPath>..\bin\$(Configuration)\</OutputPath>
+		<IntermediateOutputPath>..\bin\obj\$(Configuration)\</IntermediateOutputPath>
     </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>..\bin\Debug\</OutputPath>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>..\bin\Release\</OutputPath>
-    </PropertyGroup>
-
+	
     <ItemGroup>
       <Reference Include="AssetRipperCommon">
         <HintPath>..\..\AssetRipper\Bins\AssetRipperLibrary\ReleaseWindows\AssetRipperCommon.dll</HintPath>
@@ -35,11 +31,7 @@
         <DependentUpon>PostProcessingComponent.resx</DependentUpon>
       </Compile>
     </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="SubnauticaHarmonyFixes.zip" />
-    </ItemGroup>
-
+	
     <ItemGroup>
       <None Remove="SubnauticaFixes.zip" />
       <AdditionalFiles Include="SubnauticaFixes.zip">
