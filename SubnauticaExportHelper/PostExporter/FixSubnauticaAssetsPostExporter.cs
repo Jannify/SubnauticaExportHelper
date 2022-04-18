@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Reflection;
 using AssetRipper.Core.Logging;
 using AssetRipper.Library;
@@ -12,8 +10,8 @@ public class FixSubnauticaAssetsPostExporter : IPostExporter
 {
     public void DoPostExport(Ripper ripper)
     {
-        string exportPath = ripper.Settings.ExportPath;
-        string assetsPath = Path.Combine(exportPath, "Assets");
+        string exportPath = ripper.Settings.ExportRootPath;
+        string assetsPath = ripper.Settings.AssetsPath;
 
         Info("Overriding manifest.json");
         Directory.CreateDirectory(Path.Combine(exportPath, "Packages"));

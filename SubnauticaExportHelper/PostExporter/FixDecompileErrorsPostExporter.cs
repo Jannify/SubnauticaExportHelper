@@ -1,5 +1,4 @@
-﻿using System.IO;
-using AssetRipper.Core.Logging;
+﻿using AssetRipper.Core.Logging;
 using AssetRipper.Library;
 using AssetRipper.Library.Exporters;
 
@@ -15,8 +14,9 @@ public class FixDecompileErrorsPostExporter : IPostExporter
 
     public void DoPostExport(Ripper ripper)
     {
-        string exportPath = ripper.Settings.ExportPath;
-        string assetsPath = Path.Combine(exportPath, "Assets");
+        string exportPath = ripper.Settings.ExportRootPath;
+        string assetsPath = ripper.Settings.AssetsPath;
+        string auxiliaryFilesPath = ripper.Settings.AuxiliaryFilesPath;
         string subnauticaPath = ripper.GameStructure.PlatformStructure.RootPath;
 
         Info("Extract valid Scripts");
@@ -29,7 +29,7 @@ public class FixDecompileErrorsPostExporter : IPostExporter
         Directory.CreateDirectory(Path.Combine(assetsPath, "Libraries"));
         foreach (string assemblyName in whitelistAssemblies)
         {
-            File.Move(Path.Combine(exportPath, "AssetRipper", "GameAssemblies", $"{assemblyName}.dll"), Path.Combine(assetsPath, "Libraries", $"{assemblyName}.dll"));
+            File.Move(Path.Combine(auxiliaryFilesPath, "GameAssemblies", $"{assemblyName}.dll"), Path.Combine(assetsPath, "Libraries", $"{assemblyName}.dll"));
         }
 
         Info("Copying native assemblies");

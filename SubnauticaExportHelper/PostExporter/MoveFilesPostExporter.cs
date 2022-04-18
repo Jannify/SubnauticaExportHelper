@@ -10,8 +10,8 @@ public class MoveFilesPostExporter : IPostExporter
 {
     public void DoPostExport(Ripper ripper)
     {
-        string exportPath = ripper.Settings.ExportPath;
-        string assetsPath = Path.Combine(exportPath, "Assets");
+        string exportPath = ripper.Settings.ExportRootPath;
+        string assetsPath = ripper.Settings.AssetsPath;
         string subnauticaPath = ripper.GameStructure.PlatformStructure.RootPath;
 
         Info("Backing up Shaders");
