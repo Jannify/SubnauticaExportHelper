@@ -1,9 +1,5 @@
 ﻿using AssetRipper.Library;
-using AssetRipper.Library.Attributes;
-using SubnauticaExportHelper;
 using SubnauticaExportHelper.PostExporter;
-
-[assembly: RegisterPlugin(typeof(SubnauticaExportHelperPlugin))]
 
 namespace SubnauticaExportHelper;
 
