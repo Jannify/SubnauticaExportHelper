@@ -10,7 +10,8 @@ public class FixSubnauticaAssetsPostExporter : IPostExporter
 {
     public void DoPostExport(Ripper ripper)
     {
-        string exportPath = ripper.Settings.ExportRootPath;
+        string exportPath = ripper.Settings.ProjectRootPath;
+        string settingsPath = ripper.Settings.ProjectSettingsPath;
         string assetsPath = ripper.Settings.AssetsPath;
 
         Info("Overriding manifest.json");
@@ -18,10 +19,7 @@ public class FixSubnauticaAssetsPostExporter : IPostExporter
         File.WriteAllText(Path.Combine(exportPath, "Packages", "manifest.json"), ScriptFiles.manifest);
 
         Info("Overriding ProjectSettings.asset");
-        File.WriteAllText(Path.Combine(exportPath, "ProjectSettings", "ProjectSettings.asset"), ScriptFiles.ProjectSettings);
-
-        Info("Overriding ProjectSettings.asset");
-        File.WriteAllText(Path.Combine(exportPath, "ProjectSettings", "ProjectSettings.asset"), ScriptFiles.ProjectSettings);
+        File.WriteAllText(Path.Combine(settingsPath, "ProjectSettings.asset"), ScriptFiles.ProjectSettings);
 
         FixReplaceCode(Path.Combine(assetsPath, "Resources", "uGUI.prefab"), ScriptFiles.CameraScannerRoomPattern, ScriptFiles.CameraScannerRoomReplacement);
 

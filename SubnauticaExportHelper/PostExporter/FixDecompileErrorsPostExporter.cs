@@ -14,7 +14,6 @@ public class FixDecompileErrorsPostExporter : IPostExporter
 
     public void DoPostExport(Ripper ripper)
     {
-        string exportPath = ripper.Settings.ExportRootPath;
         string assetsPath = ripper.Settings.AssetsPath;
         string auxiliaryFilesPath = ripper.Settings.AuxiliaryFilesPath;
         string subnauticaPath = ripper.GameStructure.PlatformStructure.RootPath;
@@ -74,7 +73,7 @@ public class FixDecompileErrorsPostExporter : IPostExporter
         File.WriteAllText(path, text.Replace(pattern, replacement));
     }
 
-    private void Info(string message) => Logger.Info(LogCategory.Plugin, $"[SubnauticaExportHelper] {message}");
+    private static void Info(string message) => Logger.Info(LogCategory.Plugin, $"[SubnauticaExportHelper] {message}");
 
     private static void CopyDirectory(string sourcePath, string targetPath)
     {

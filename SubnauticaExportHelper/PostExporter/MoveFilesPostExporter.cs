@@ -10,7 +10,7 @@ public class MoveFilesPostExporter : IPostExporter
 {
     public void DoPostExport(Ripper ripper)
     {
-        string exportPath = ripper.Settings.ExportRootPath;
+        string exportPath = ripper.Settings.ProjectRootPath;
         string assetsPath = ripper.Settings.AssetsPath;
         string subnauticaPath = ripper.GameStructure.PlatformStructure.RootPath;
 
